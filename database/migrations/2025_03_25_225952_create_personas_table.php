@@ -13,7 +13,7 @@ class CreatePersonasTable extends Migration
      */
     public function up()
     {
-       /* Schema::create('personas', function (Blueprint $table) {
+        Schema::create('personas', function (Blueprint $table) {
             $table->id('idPersonas'); // ID de la tabla personas
             $table->string('nombre_persona', 45);
             $table->string('apellido_persona', 45);
@@ -23,7 +23,7 @@ class CreatePersonasTable extends Migration
             $table->string('celular_secundario_persona', 40)->nullable();
             $table->string('observacion', 200)->nullable();
             $table->timestamps();
-        });*/
+        });
     }
     /* * Reverse the migrations.
      *

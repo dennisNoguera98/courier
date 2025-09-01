@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-/* class AddCedulaToPersonasTable extends Migration
+class AddCedulaToPersonasTable extends Migration
 {
     public function up()
     {
@@ -19,4 +19,4 @@ use Illuminate\Support\Facades\Schema;
             $table->dropColumn('cedula');
         });
     }
-} */
+} 

@@ -13,14 +13,14 @@ class ModifyUsuariosContrasenaLength extends Migration
      */
    public function up()
 {
-    Schema::table('usuarios', function (Blueprint $table) {
+    Schema::table('users', function (Blueprint $table) {
         $table->string('Usuarios_contrasena', 100)->change();
     });
 }
 
 public function down()
 {
-    Schema::table('usuarios', function (Blueprint $table) {
+    Schema::table('users', function (Blueprint $table) {
         $table->string('Usuarios_contrasena', 45)->change();
     });
 }

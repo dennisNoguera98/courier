@@ -72,16 +72,18 @@ class ClienteController extends Controller
             'descripcion' => $request->descripcion,
             'coordenadas' => $request->coordenadas,
             'estado' => $request->estado,
-            'fecha_hora' => now(),
+            'fecha_hora' => now()
         ]);
     }
 
     // Crear cliente
-    Cliente::create([
+    $cliente = Cliente::create([
         'Personas_idPersonas' => $persona->idPersonas,
         'Prioridades_idPrioridades' => $request->prioridad_id,
         'Ubicaciones_idUbicaciones' => $ubicacion->idUbicaciones,
     ]);
+
+    
 
     return redirect()->route('clientes.index')->with('success', 'Cliente creado correctamente.');
 }

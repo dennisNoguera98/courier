@@ -13,12 +13,12 @@ class CreatePerfilesTable extends Migration
      */
     public function up()
     {
-      /*  Schema::create('perfiles', function (Blueprint $table) {
+        Schema::create('perfiles', function (Blueprint $table) {
             $table->id('idPerfiles');
             $table->string('nombre_perfil', 45);
             $table->string('descripcion_perfil', 200)->nullable();
             $table->timestamps();
-        });*/
+        });
     }
 
     /**
