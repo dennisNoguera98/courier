@@ -16,6 +16,7 @@ class AuthController extends Controller
     return view('auth.login');  // O la vista que uses para el login
 }
 
+    //Login WEB
     public function login(Request $request)
     {
         $credentials = $request->only('Usuarios_usuario', 'Usuarios_contrasena');
@@ -29,6 +30,57 @@ class AuthController extends Controller
 
         return back()->withErrors(['Usuarios_usuario' => 'Credenciales inválidas.']);
     }
+
+    //Login APP
+    public function loginApp(Request $request)
+    {
+
+       /* echo "=== LOGIN DEBUG ===\n";
+        echo "Request data: " . json_encode($request->all()) . "\n";
+        echo "Usuario recibido: " . $request->usuario . "\n";
+        echo "Contraseña recibida: " . $request->contrasena . "\n";
+*/
+        $request->validate([
+            'usuario' => 'required',
+            'contrasena' => 'required'
+        ]);
+
+        $user = Usuario::where('Usuarios_usuario', $request->usuario)->first();
+
+
+        if ($user) {
+  /*          echo "Usuario encontrado!\n";
+            echo "ID: " . ($user->id ?? 'N/A') . "\n";
+            echo "Usuario: " . $user->Usuarios_usuario . "\n";
+            echo "Hash en BD: " . $user->Usuarios_contrasena . "\n";
+    */        
+            // 4. Debug: Verificar hash
+            $hashCheck = Hash::check($request->contrasena, $user->Usuarios_contrasena);
+      //      echo "Hash válido: " . ($hashCheck ? 'SÍ' : 'NO') . "\n";
+            
+        } else {
+        //    echo "Usuario NO encontrado\n";
+            
+            // 5. Debug: Ver qué usuarios existen
+            $allUsers = Usuario::select('Usuarios_usuario')->limit(5)->get();
+          //  echo "Usuarios disponibles: " . json_encode($allUsers->pluck('Usuarios_usuario')) . "\n";
+        }
+
+
+
+        if (!$user || !Hash::check($request->contrasena, $user->Usuarios_contrasena)) {
+          //  echo "Usuario NO encontrado\n";
+            return response()->json(['message' => 'Credenciales inválidas'], 401);
+        }
+
+       // $token = $user->createToken('mobile-app')->plainTextToken;
+
+        return response()->json([
+            'usuario' => "juan",
+            'roles' => $user->perfiles->pluck('nombre_perfil'),
+        ]);
+    }
+
 
     public function logout()
     {

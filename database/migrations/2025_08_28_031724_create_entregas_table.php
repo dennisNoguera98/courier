@@ -13,13 +13,21 @@ class CreateEntregasTable extends Migration
      */
     public function up()
     {
-        Schema::create('entregas', function (Blueprint $table) {
-            $table->integer('idEntregas')->primary();
-            $table->dateTime('fecha_entrega');
-            $table->unsignedBigInteger('Clientes_idClientes');
-            $table->string('estado', 45);
+         Schema::create('entregas', function (Blueprint $table) {
+            $table->id('entrega_id');
+            $table->string('nombre_entrega');
+            $table->unsignedBigInteger('estado');
+            $table->text('observaciones')->nullable();
+            $table->integer('gestor_id');
+            $table->string('sync_status');
 
-            $table->foreign('Clientes_idClientes')->references('idClientes')->on('clientes');
+            // gestor que creó la entrega
+            $table->foreign('gestor_id')
+                  ->references('usuario_id')
+                  ->on('Usuarios')
+                  ->onDelete('cascade');
+
+            $table->timestamps();
         });
 
     }

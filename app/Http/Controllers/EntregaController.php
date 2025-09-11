@@ -12,6 +12,93 @@ class EntregaController extends Controller
     private float $baseLat = -25.2637;
     private float $baseLng = -57.5759;
 
+
+
+
+   // Listar todas las entregas del gestor autenticado
+    public function index()
+    {
+        $user = Auth::user();
+        $entregas = Entrega::where('gestor_id', $user->id)->with('extractos')->get();
+
+        return response()->json($entregas);
+    }
+
+    // Crear una nueva entrega
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre_entrega' => 'required|string|max:255',
+            'sync_status' => 'required|string|max:255',
+            'gestor_id' => 'required|integer',
+            //'tipo_tarjeta' => 'required|string|max:255',
+            'estado' => 'required|integer',
+            'observaciones' => 'nullable|string',
+        ]);
+
+        $entrega = Entrega::create([
+            'nombre_entrega' => $request->nombre_entrega,
+            'estado' => $request->estado,
+            'observaciones' => $request->observaciones,
+            'gestor_id' => $request->gestor_id,
+           // 'gestor_id' => Auth::id(),
+            'sync_status' => $request->sync_status,
+        ]);
+
+        return response()->json($entrega, 201);
+    }
+
+    // Mostrar una entrega específica
+    public function show($id)
+    {
+        $entrega = Entrega::with('extractos')->findOrFail($id);
+        return response()->json($entrega);
+    }
+
+    // Actualizar una entrega
+    public function update(Request $request, $id)
+    {
+        $entrega = Entrega::findOrFail($id);
+
+        //$this->authorize('update', $entrega); // opcional: política de acceso
+
+        $entrega->update($request->only(['nombre_entrega', 'sync_status', 'estado', 'observaciones']));
+
+        return response()->json($entrega);
+    }
+
+    // Eliminar una entrega
+    public function destroy($id)
+    {
+        $entrega = Entrega::findOrFail($id);
+
+        $this->authorize('delete', $entrega);
+
+        $entrega->delete();
+
+        return response()->json(['message' => 'Entrega eliminada correctamente']);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------
+
+
+
     /**
      * FASE 1: Mapa con entregas activas (Entregas -> Cliente -> Ubicacion).
      */

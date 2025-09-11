@@ -15,12 +15,12 @@ class CreatePerfilesHasUsuariosTable extends Migration
     {
         Schema::create('Perfiles_has_Usuarios', function (Blueprint $table) {
             $table->unsignedBigInteger('Perfiles_idPerfiles');
-            $table->integer('Usuarios_idtable1');
+            $table->integer('Usuarios_usuario_id');
 
-            $table->primary(['Perfiles_idPerfiles', 'Usuarios_idtable1'], 'pk_perfiles_usuarios');
+            $table->primary(['Perfiles_idPerfiles', 'Usuarios_usuario_id'], 'pk_perfiles_usuarios');
 
             $table->foreign('Perfiles_idPerfiles')->references('idPerfiles')->on('perfiles');
-            $table->foreign('Usuarios_idtable1')->references('idtable1')->on('Usuarios');
+            $table->foreign('Usuarios_usuario_id')->references('usuario_id')->on('Usuarios');
         });
 
     }

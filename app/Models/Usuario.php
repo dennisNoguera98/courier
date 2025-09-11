@@ -9,8 +9,8 @@ class Usuario extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'usuarios';
-    protected $primaryKey = 'idtable1';
+    protected $table = 'Usuarios';
+    protected $primaryKey = 'usuario_id';
     public $timestamps = false;
 
     protected $fillable = [
@@ -40,7 +40,17 @@ class Usuario extends Authenticatable
 
         public function perfiles()
     {
-        return $this->belongsToMany(Perfil::class, 'perfiles_has_usuarios', 'Usuarios_idtable1', 'Perfiles_idPerfiles');
+        return $this->belongsToMany(Perfil::class, 'Perfiles_has_Usuarios', 'Usuarios_usuario_id', 'Perfiles_idPerfiles');
+    }
+
+    public function entregas()
+    {
+        return $this->hasMany(Entrega::class, 'gestor_id');
+    }
+
+    public function extractos()
+    {
+        return $this->hasMany(Extracto::class, 'gestor_id');
     }
     
 }

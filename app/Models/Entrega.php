@@ -6,12 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Entrega extends Model
 {
-    protected $table = 'entregas'; // si tu tabla se llama distinto, ajusta
-    protected $primaryKey = 'id';  // o 'idEntregas' si así es tu PK
 
-    public function cliente()
+    protected $primaryKey = 'entrega_id';
+
+    protected $fillable = [
+        'nombre_entrega',
+        'estado',
+        'observaciones',
+        'gestor_id',
+        'sync_status'
+    ];
+
+    public function extractos()
     {
-        // FK en entregas: Clientes_idClientes (ajusta si es otro)
-        return $this->belongsTo(Cliente::class, 'Clientes_idClientes', 'idClientes');
+        return $this->hasMany(Extracto::class, 'entrega_id', 'entrega_id');
+    }
+
+    public function gestor()
+    {
+        return $this->belongsTo(Usuario::class, 'Usuarios_usuario_id');
     }
 }

@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
 class Perfil extends Model
 {
     use HasFactory;
@@ -24,6 +21,6 @@ class Perfil extends Model
 
       public function usuarios()
     {
-        return $this->belongsToMany(Usuario::class, 'perfiles_has_usuarios', 'Perfiles_idPerfiles', 'Usuarios_idtable1');
+        return $this->belongsToMany(Usuario::class, 'Perfiles_has_Usuarios', 'Perfiles_idPerfiles', 'Usuarios_usuario_id');
     }
 }
