@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barrio;
+use App\Models\Ciudad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -136,6 +138,104 @@ class SyncController extends Controller
                         ->update([
                             'sync_status' => 'synced'
                         ]);*/
+            }
+
+
+            DB::commit();
+
+            return response()->json([
+                'pendingRecords' => $transformedRecords,
+                'lastSyncTimestamp' => now()->timestamp,
+                'hasMore' => $pendingRecords->count() >= 100
+            ]);
+
+
+        } catch (\Exception $e) {
+            Log::error('Error en sync gestor: ' . $e->getMessage());
+            return response()->json([
+                'error' => 'Error al sincronizar datos',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /*
+     * Obtener Ciudades desde App
+     */
+    public function getCiudadesConBarrios(Request $request)
+    {
+        //mas adelante lo que podria validar de vuelta de este lado que sea perfil gestor,
+        // recibir por parametro
+        try {
+            DB::beginTransaction();
+
+            $lastSync = $request->query('lastSync', 0);
+            $lastSyncDate = $lastSync > 0 ? Carbon::createFromTimestamp($lastSync) : Carbon::create(1970);
+
+            // Obtener entregas que han cambiado desde la última sincronización
+            $pendingRecords = Ciudad::where('updated_at', '>', $lastSyncDate)
+                ->orWhere('created_at', '>', $lastSyncDate)
+                ->orWhere('sync_status', 'pending') // Campo personalizado para control de sync
+                //->with(['cliente', 'courier']) // Incluir relaciones necesarias
+                ->orderBy('updated_at', 'desc')
+                ->limit(100) // Limitar para evitar sobrecarga
+                ->get();
+
+            //echo "last de paarametro" . $lastSyncDate . "\n";
+
+            // Ids para actualizar estado a synced - enviado a app
+            $ciudadesIds = $pendingRecords->pluck('id')->toArray();
+
+            $transformedRecords = $pendingRecords->map(function ($ciudad) use ($lastSyncDate)  {
+                // Incluir barrios
+                $barriosQuery = Barrio::where('ciudad_id', $ciudad->id)
+                    ->where(function ($query) use ($lastSyncDate) {
+                        $query->where('updated_at', '>', $lastSyncDate)
+                            ->orWhere('created_at', '>', $lastSyncDate)
+                            ->orWhere('sync_status', 'pending');
+                    })
+                    ->orderBy('updated_at', 'desc')
+                    ->limit(100)
+                    ->get(); // Limitar para evitar sobrecarga
+
+                // Guardar IDs en variable
+                $barriosIds = $barriosQuery->pluck('id')->toArray();
+
+                if (!empty($barriosIds)) {
+                    $updated = Barrio::whereIn('id', $barriosIds)
+                        ->update([
+                            'sync_status' => 'synced'
+                        ]);
+
+                    // debug
+                    // echo "Registros actualizados: " . $updated;
+                }
+
+                return [
+                    'id' => $ciudad->id,
+                    'nombre_ciudad' => $ciudad->nombre_ciudad,
+                    'cobertura' => $ciudad->cobertura,
+                    'created_at' => $ciudad->created_at->toDateTimeString(),
+                    'updated_at' => $ciudad->updated_at->toDateTimeString(),
+                    'barrios' => $barriosQuery
+                        ->map(function($barrio) {
+                            return [
+                                'id' => $barrio->id,
+                                'nombre_barrio' => $barrio->nombre_barrio,
+                                'cobertura' => $barrio->cobertura,
+                                'created_at' => $barrio->created_at->toDateTimeString(),
+                                'updated_at' => $barrio->updated_at->toDateTimeString(),
+                            ];
+                        })
+                ];
+            });
+
+            if (!empty($ciudadesIds)) {
+                // Marcar ciudades como sincronizadas
+                $updated = Ciudad::whereIn('id', $ciudadesIds)
+                    ->update([
+                        'sync_status' => 'synced'
+                    ]);
             }
 
 

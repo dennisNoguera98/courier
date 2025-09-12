@@ -19,6 +19,7 @@ Route::get('/sync/gestor', [App\Http\Controllers\SyncController::class, 'getGest
 Route::get('/sync/courier/{userId}', [App\Http\Controllers\SyncController::class, 'getCourierAssignments']);
 Route::post('/sync/upload/entregas', [App\Http\Controllers\SyncController::class, 'uploadEntregas']);
 Route::post('/sync/upload/extractos', [App\Http\Controllers\SyncController::class, 'uploadExtractos']);
+Route::get('/sync/ciudadesConBarrios', [App\Http\Controllers\SyncController::class, 'getCiudadesConBarrios']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
