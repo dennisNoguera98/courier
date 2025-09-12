@@ -14,6 +14,7 @@ class Barrio extends Model
     protected $fillable = [
         'nombre_barrio',
         'cobertura',
+        'sync_status',
         'ciudad_id',
     ];
 

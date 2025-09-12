@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre_barrio');
             $table->boolean('cobertura')->default(true);
+            $table->string('sync_status', 50)->default('pending');
             $table->foreignId('ciudad_id')
                 ->constrained('ciudades')
                 ->onDelete('cascade');
