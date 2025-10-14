@@ -19,6 +19,6 @@ class Perfil extends Model
 
       public function usuarios()
     {
-        return $this->belongsToMany(Usuario::class, 'Perfiles_has_Usuarios', 'Perfiles_idPerfiles', 'Usuarios_usuario_id');
+        return $this->belongsToMany(Usuario::class, 'perfiles_has_usuarios', 'Perfiles_idPerfiles', 'Usuarios_usuario_id');
     }
 }

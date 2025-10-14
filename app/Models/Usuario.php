@@ -40,7 +40,7 @@ class Usuario extends Authenticatable
 
         public function perfiles()
     {
-        return $this->belongsToMany(Perfil::class, 'Perfiles_has_Usuarios', 'Usuarios_usuario_id', 'Perfiles_idPerfiles');
+        return $this->belongsToMany(Perfil::class, 'perfiles_has_usuarios', 'Usuarios_usuario_id', 'Perfiles_idPerfiles');
     }
 
     public function entregas()
