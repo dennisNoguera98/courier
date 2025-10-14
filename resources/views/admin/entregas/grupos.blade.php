@@ -13,14 +13,13 @@
   <div class="list-group">
     @foreach($resumen as $g)
       <a href="{{ route('admin.entregas.grupo', ['idx' => $g['idx']]) }}" class="list-group-item list-group-item-action">
-        <strong>Entrega {{ $g['idx'] }}</strong>
+        <strong>Grupo {{ $g['idx'] }}</strong>
         <span class="text-muted">— {{ $g['total'] }} entregas — Barrios: {{ implode(', ', $g['barrios']) }}</span>
       </a>
     @endforeach
   </div>
-  <span class="text-muted">— {{ $g['total'] }} entregas — Barrios: {{ implode(', ', $g['barrios']) }}</span>
 
-  <a class="btn btn-secondary mt-3" href="{{ route('admin.entregas') }}">Volver al mapa</a>
+  <a class="btn btn-secondary mt-3" href="{{ route('admin.entregas.selector') }}">Volver</a>
 </div>
 </body>
 </html>

@@ -15,10 +15,17 @@ class Ubicacion extends Model
         'coordenadas',
         'estado',
         'fecha_hora',
+        'barrio_id',
+        'barrio'
     ];
 
     public function clientes()
     {
         return $this->hasMany(Cliente::class, 'Ubicaciones_idUbicaciones');
     }
+
+  public function barrioRel()
+{
+    return $this->belongsTo(Barrio::class, 'barrio_id', 'id');
+}
 }

@@ -4,11 +4,18 @@
 <div class="container mt-4">
     <h2 class="mb-4">📦 Grupo {{ $idx }} — Entregas asignadas</h2>
 
+
     <div class="alert alert-info">
-        <strong>Punto de partida:</strong> {{ $base['lat'] }}, {{ $base['lng'] }}  
-        <br>
-        <strong>Total entregas:</strong> {{ count($entregas) }}
-    </div>
+    <strong>Punto de partida:</strong> {{ $base['lat'] }}, {{ $base['lng'] }}<br>
+    <strong>Total entregas:</strong> {{ count($entregas) }}<br>
+    <strong>Distancia estimada:</strong> {{ $distKm }} km
+</div>
+
+@if(!empty($gmapsUrl))
+  <a href="{{ $gmapsUrl }}" target="_blank" class="btn btn-primary mb-3">
+    Abrir recorrido en Google Maps
+  </a>
+@endif
 
     @if(count($entregas) > 0)
         <div class="card shadow-sm">
@@ -54,9 +61,7 @@
     @endif
 
     <div class="mt-4">
-        <a href="{{ route('admin.entregas') }}" class="btn btn-secondary">
-            ← Volver al mapa
-        </a>
+      <a href="{{ route('admin.entregas.selector') }}" class="btn btn-secondary">← Volver</a>
     </div>
 </div>
 @endsection

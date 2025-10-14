@@ -77,11 +77,59 @@ Route::get('/reportes', function () {
 
  Route::get('/admin/entregas/dividir/{cantidad}', [EntregaController::class, 'dividirEntregas']);*/
 
- Route::get('/admin/entregas', [EntregaController::class, 'mapaEntregas'])
-    ->name('admin.entregas');
+/* Route::get('/admin/entregas', [EntregaController::class, 'mapaEntregas'])
+    ->name('admin.entregas'); */
 
     // Generar grupos (POST con cantidad de couriers)
 Route::post('/admin/entregas/generar', [EntregaController::class, 'generarRutas'])->name('admin.entregas.generar');
 
 // Ver detalle de un grupo (índice basado en 1: 1..K)
 Route::get('/admin/entregas/grupo/{idx}', [EntregaController::class, 'verGrupo'])->name('admin.entregas.grupo');
+
+//-----------------------------------------------------------------
+
+/*Route::get('/admin/entregas/seleccionar', [EntregaController::class, 'selectorMes'])
+    ->name('admin.entregas.selector');
+
+// Por ahora solo recibe el mes seleccionado; luego lo conectamos con tu mapa
+Route::get('/admin/entregas/mes/{year}/{month}', [EntregaController::class, 'verMes'])
+    ->name('admin.entregas.mes');*/
+
+    //-------------------------------------------------------------
+
+
+// Mapa separado
+Route::get('/admin/entregas/mapa', [EntregaController::class, 'mapaEntregas'])
+    ->name('admin.entregas.mapa');
+
+
+Route::get('/admin/entregas/selector', [EntregaController::class, 'selectorMes'])
+    ->name('admin.entregas.selector');
+
+    //--------------------------------------
+Route::prefix('admin/entregas')->name('admin.entregas.')->group(function () {
+    Route::get('/', [EntregaController::class, 'selectorMes'])->name('selector');
+
+    // <-- cambia este handler a mapaPorMes
+    Route::get('/mes/{year}/{month}', [EntregaController::class, 'mapaPorMes'])
+        ->where(['year' => '\d{4}', 'month' => '0?[1-9]|1[0-2]'])
+        ->name('mes');
+
+    Route::post('/generar', [EntregaController::class, 'generarRutas'])->name('generar');
+    Route::get('/grupo/{idx}', [EntregaController::class, 'verGrupo'])->name('grupo');
+});
+
+// VER GRUPOS DE ENTREGAS Y DEMAS
+
+Route::get('/admin/entregas/gestionar-grupos', [EntregaController::class, 'gestionarGrupos'])
+    ->name('admin.entregas.gestionarGrupos');
+
+Route::delete('/admin/entregas/gestionar-grupos/{grupo}', [EntregaController::class, 'eliminarGrupo'])
+    ->name('admin.entregas.gestionarGrupos.eliminar');
+
+Route::post('/admin/entregas/gestionar-grupos/{grupo}/asignar-courier', [EntregaController::class, 'asignarCourier'])
+    ->name('admin.entregas.gestionarGrupos.asignar'); // placeholder
+
+    Route::post('/admin/entregas/gestionar-grupos/asignaciones',
+    [EntregaController::class, 'guardarAsignacionesMasivas']
+)->name('admin.entregas.gestionarGrupos.guardarAsignaciones');

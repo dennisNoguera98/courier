@@ -53,14 +53,14 @@
         @endphp
 
         @if (in_array('Courrier', $perfiles))
-            <a href="{{ route('admin.entregas') }}" class="btn btn-custom">Entregas</a>
+            <a href="{{ route('admin.entregas.selector') }}" class="btn btn-custom">Entregas</a>
         @else
             <a href="{{ route('clientes.index') }}" class="btn btn-custom">Clientes</a>
             <a href="{{ route('perfiles.index') }}" class="btn btn-custom">Perfiles</a>
-            <a href="{{ route('admin.entregas') }}" class="btn btn-custom">Entregas</a>
+            <a href="{{ route('admin.entregas.selector') }}" class="btn btn-custom">Entregas</a>
             <a href="{{ route('reportes.index') }}" class="btn btn-custom">Reportes</a>
         @endif
-
+ 
     </div>
 </body>
 </html>

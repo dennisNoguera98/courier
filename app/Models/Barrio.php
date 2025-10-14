@@ -22,4 +22,11 @@ class Barrio extends Model
     {
         return $this->belongsTo(Ciudad::class);
     }
+
+    public function barrio()
+    {
+        return $this->belongsTo(Barrio::class, 'barrio_id', 'id'); // si usas FK barrio_id
+    }
+
+
 }
