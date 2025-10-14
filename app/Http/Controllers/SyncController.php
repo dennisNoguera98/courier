@@ -347,7 +347,7 @@ class SyncController extends Controller
                 ], 400);
            }
 
-          // echo "Cambios: " . count($changes) ."\n";
+           //echo "Cambios: " . count($changes) ."\n";
             foreach ($changes as $change) {
                 switch ($tabla) {
                     case "entregas":
@@ -376,7 +376,29 @@ class SyncController extends Controller
                     break;
 
                     case "extractos":
+                      // echo "Extracto: " .json_encode($change, JSON_PRETTY_PRINT). "\n";
+                        // Buscar si ya existe por UUID
+                        try{
+                            $extracto = Extracto::where('extracto_id', $change['extracto_id'])->first();
 
+
+                            if ($extracto != null) {
+                                $extracto->update($change);
+                                $message = 'Extracto actualizada correctamente';
+                            } else {
+                                // si se agregan campos a la tabla agregar a fillable del modelo entrega
+                                $extracto = Extracto::create($change);
+                                $message = 'Extracto creada correctamente';
+                            }
+
+                        //    echo "ex ant: " .json_encode($extracto, JSON_PRETTY_PRINT). "\n";
+                            $success[] = $extracto->extracto_id;
+                        }catch (\Exception $e) {
+                            $failed[] = [
+                                'extracto_id' => $change['extracto_id'] ?? null,
+                                'error' => $e->getMessage()
+                            ];
+                        }
                     break;
                 }
             }

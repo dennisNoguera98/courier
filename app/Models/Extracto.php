@@ -47,12 +47,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Extracto extends Model
 {
 
+    protected $primaryKey = 'extracto_id';
+
     protected $fillable = [
+        'extracto_id',
         'entrega_id',
         'cliente_id',
         'orden_ruta',
         'estado',
         'gestor_id',
+        'sync_status',
     ];
 
     public function entrega()

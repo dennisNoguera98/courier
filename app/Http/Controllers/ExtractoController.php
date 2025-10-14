@@ -30,6 +30,7 @@ class ExtractoController extends Controller
             'cliente_id' => $request->cliente_id,
             'estado' => $request->estado,
             'orden_ruta' => $request->orden_ruta,
+            'sync_status' => $request->sync_status,
             'gestor_id' => Auth::id(),
         ]);
 

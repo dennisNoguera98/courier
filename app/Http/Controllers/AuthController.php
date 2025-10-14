@@ -53,14 +53,14 @@ class AuthController extends Controller
             echo "ID: " . ($user->id ?? 'N/A') . "\n";
             echo "Usuario: " . $user->Usuarios_usuario . "\n";
             echo "Hash en BD: " . $user->Usuarios_contrasena . "\n";
-    */        
+    */
             // 4. Debug: Verificar hash
             $hashCheck = Hash::check($request->contrasena, $user->Usuarios_contrasena);
       //      echo "Hash válido: " . ($hashCheck ? 'SÍ' : 'NO') . "\n";
-            
+
         } else {
         //    echo "Usuario NO encontrado\n";
-            
+
             // 5. Debug: Ver qué usuarios existen
             $allUsers = Usuario::select('Usuarios_usuario')->limit(5)->get();
           //  echo "Usuarios disponibles: " . json_encode($allUsers->pluck('Usuarios_usuario')) . "\n";
@@ -76,6 +76,7 @@ class AuthController extends Controller
        // $token = $user->createToken('mobile-app')->plainTextToken;
 
         return response()->json([
+            'id' => $user->usuario_id,
             'usuario' => "juan",
             'roles' => $user->perfiles->pluck('nombre_perfil'),
         ]);
