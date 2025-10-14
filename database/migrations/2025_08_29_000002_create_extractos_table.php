@@ -25,13 +25,13 @@ class CreateExtractosTable extends Migration {
 
             // estado del extracto
             $table->unsignedBigInteger('estado');
-            
+
             $table->string('sync_status');
 
             // gestor que creó el extracto
             $table->foreign('gestor_id')
                   ->references('usuario_id')
-                  ->on('Usuarios')
+                  ->on('usuarios')
                   ->onDelete('cascade');
 
             $table->timestamps();

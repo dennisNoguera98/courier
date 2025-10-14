@@ -9,7 +9,7 @@ class Usuario extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'Usuarios';
+    protected $table = 'usuarios';
     protected $primaryKey = 'usuario_id';
     public $timestamps = false;
 
@@ -52,5 +52,5 @@ class Usuario extends Authenticatable
     {
         return $this->hasMany(Extracto::class, 'gestor_id');
     }
-    
+
 }

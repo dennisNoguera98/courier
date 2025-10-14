@@ -9,7 +9,7 @@ class UsuarioSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('Usuarios')->insert([
+        DB::table('usuarios')->insert([
             [
                 'usuario_id' => 1,
                 'Usuarios_usuario' => 'gestor1',

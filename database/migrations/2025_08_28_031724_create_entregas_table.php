@@ -24,7 +24,7 @@ class CreateEntregasTable extends Migration
             // gestor que creó la entrega
             $table->foreign('gestor_id')
                   ->references('usuario_id')
-                  ->on('Usuarios')
+                  ->on('usuarios')
                   ->onDelete('cascade');
 
             $table->timestamps();
