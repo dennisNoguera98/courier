@@ -357,6 +357,7 @@ class SyncController extends Controller
                            $entrega = Entrega::where('entrega_id', $change['entrega_id'])->first();
 
                            if ($entrega) {
+                               //Comparar update_at para decicidir que cual es mas actualizado y decidir si actualizar o dejar
                                $entrega->update($change);
                                $message = 'Entrega actualizada correctamente';
                            } else {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Extracto extends Model
 {
-    protected $table = 'extractos';              // <-- nombre de la tabla
-    protected $primaryKey = 'extracto_id';       // <-- PK correcta
-    public $incrementing = true;
+    protected $table = 'extractos';
+    protected $primaryKey = 'extracto_id';
+    //public $incrementing = true;// se quita el autoincrement para que el id sea lo que viene de la app
     protected $keyType = 'int';
-    public $timestamps = true;                   // si tu tabla tiene created_at/updated_at
+    public $timestamps = true;
 
     protected $fillable = [
+        'extracto_id',//se establece en el fillable para que create cree el extracto con id que envia la app
         'entrega_id',
         'cliente_id',
         'orden_ruta',
+        'sync_status',
         'estado',
-        'gestor_id',                             // <-- este es el FK al usuario/gestor
+        'gestor_id',
     ];
 
     public function entrega()
