@@ -23,6 +23,55 @@ class ClienteSeeder extends Seeder
                 'Ubicaciones_idUbicaciones' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],
+            [
+                'Prioridades_idPrioridades' => 2,
+                'Personas_idPersonas' => 3,
+                'Ubicaciones_idUbicaciones' => 3,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'Prioridades_idPrioridades' => 2,
+                'Personas_idPersonas' => 4,
+                'Ubicaciones_idUbicaciones' => 4,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'Prioridades_idPrioridades' => 2,
+                'Personas_idPersonas' => 5,
+                'Ubicaciones_idUbicaciones' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'Prioridades_idPrioridades' => 2,
+                'Personas_idPersonas' => 6,
+                'Ubicaciones_idUbicaciones' => 6,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'Prioridades_idPrioridades' => 2,
+                'Personas_idPersonas' => 7,
+                'Ubicaciones_idUbicaciones' => 7,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'Prioridades_idPrioridades' => 2,
+                'Personas_idPersonas' => 8,
+                'Ubicaciones_idUbicaciones' => 8,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'Prioridades_idPrioridades' => 2,
+                'Personas_idPersonas' => 9,
+                'Ubicaciones_idUbicaciones' => 9,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }

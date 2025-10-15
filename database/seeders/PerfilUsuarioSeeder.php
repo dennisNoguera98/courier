@@ -12,6 +12,7 @@ class PerfilUsuarioSeeder extends Seeder
         DB::table('perfiles_has_usuarios')->insert([
             ['Perfiles_idPerfiles' => 1, 'Usuarios_usuario_id' => 1], // Gestor
             ['Perfiles_idPerfiles' => 2, 'Usuarios_usuario_id' => 2], // Courier
+            ['Perfiles_idPerfiles' => 2, 'Usuarios_usuario_id' => 3], // Courier
         ]);
     }
 }

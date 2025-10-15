@@ -14,13 +14,19 @@ class UsuarioSeeder extends Seeder
                 'usuario_id' => 1,
                 'Usuarios_usuario' => 'gestor1',
                 'Usuarios_contrasena' => bcrypt('password123'),
-                'Personas_idPersonas' => 1,
+                'Personas_idPersonas' => 10,
             ],
             [
                 'usuario_id' => 2,
                 'Usuarios_usuario' => 'courier1',
                 'Usuarios_contrasena' => bcrypt('password456'),
-                'Personas_idPersonas' => 2,
+                'Personas_idPersonas' => 10,
+            ],
+            [
+                'usuario_id' => 3,
+                'Usuarios_usuario' => 'courier2',
+                'Usuarios_contrasena' => bcrypt('password456'),
+                'Personas_idPersonas' => 11,
             ],
         ]);
     }
